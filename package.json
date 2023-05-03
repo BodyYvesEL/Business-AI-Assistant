@@ -1,0 +1,19 @@
+{
+  "name": "business-ai-assistant",
+  "version": "1.0.0",
+  "description": "AI Business Assistant",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BodyYvesEL/Business-AI-Assistant.git"
+  },
+  "author": "Body Elvis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BodyYvesEL/Business-AI-Assistant/issues"
+  },
+  "homepage": "https://github.com/BodyYvesEL/Business-AI-Assistant#readme"
+}
