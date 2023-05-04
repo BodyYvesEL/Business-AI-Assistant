@@ -5,6 +5,7 @@ import MessageList from './MessageList';
 const Chatbot = ({ auth }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -25,19 +26,39 @@ const Chatbot = ({ auth }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        '/api/messages',
-        {
-          text: input,
-        },
-        {
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await axios.post('/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${auth.token}`,
+          },
+        });
+        const fileMessage = {
+          text: res.data.name,
+          fileUrl: res.data.url,
+        };
+        const messageRes = await axios.post('/api/messages', fileMessage, {
           headers: {
             Authorization: `Bearer ${auth.token}`,
           },
-        }
-      );
-      setMessages(messages => [...messages, res.data]);
-      setInput('');
+        });
+        setMessages(messages => [...messages, messageRes.data]);
+        setFile(null);
+      }
+      if (input) {
+        const textMessage = {
+          text: input,
+        };
+        const messageRes = await axios.post('/api/messages', textMessage, {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        });
+        setMessages(messages => [...messages, messageRes.data]);
+        setInput('');
+      }
     } catch (err) {
       console.error(err);
     }
@@ -47,6 +68,7 @@ const Chatbot = ({ auth }) => {
     <>
       <MessageList messages={messages} />
       <form onSubmit={handleSubmit}>
+        <input type="file" onChange={e => setFile(e.target.files[0])} />
         <input type="text" value={input} onChange={e => setInput(e.target.value)} />
         <button type="submit">Send</button>
       </form>

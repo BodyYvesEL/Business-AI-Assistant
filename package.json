@@ -2,8 +2,9 @@
   "name": "business-ai-assistant",
   "version": "1.0.0",
   "description": "AI Business Assistant",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/BodyYvesEL/Business-AI-Assistant/issues"
   },
-  "homepage": "https://github.com/BodyYvesEL/Business-AI-Assistant#readme"
+  "homepage": "https://github.com/BodyYvesEL/Business-AI-Assistant#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "react-dom": "^18.2.0"
+  }
 }
